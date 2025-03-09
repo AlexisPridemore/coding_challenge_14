@@ -1,6 +1,6 @@
 // Task 2: Adding Support Tickets Dynamically
 
-function addSupportTicket(customerName, issueDescription, priorityLevel) {
+function createSupportTicket(customerName, issueDescription, priorityLevel) {
 // main support ticket container
     const ticket = document.createElement('div');
     card.setAttribute("id", `ticket-${Date.now()}`); //Set class attribute
@@ -45,6 +45,13 @@ function highlightHighPriorityTickets() {
         }
     });
 }
+// Task 4 Addition
+// Event listener on ticketContainer to demonstrate event bubbling
+document.getElementById("ticketContainer").addEventListener("click", function(event) {
+    if (event.target.closest(".support-ticket")) {
+        console.log("Ticket clicked:", event.target.closest(".support-ticket").querySelector("h3").textContent);
+    }
+});
 
 // Example test case
 document.addEventListener("DOMContentLoaded", function() {
