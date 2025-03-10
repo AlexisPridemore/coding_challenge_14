@@ -71,6 +71,7 @@ ticket.addEventListener('dblclick', function() {
     // making save button
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
+    saveButton.setAttribute('class', 'save-btn');
 
     // clearing current content
     ticket.innerHTML = '';
@@ -89,16 +90,30 @@ ticket.addEventListener('dblclick', function() {
         priorityState.textContent = `Priority: ${priorityInput.value}`;
         priorityState.setAttribute('class', priorityInput.value.toLowerCase());
 
-        // reverting back fields to static text
+        //clear and update ticket with new details
         ticket.innerHTML = '';
         ticket.appendChild(nameHeading);
         ticket.appendChild(issueText);
         ticket.appendChild(priorityState);
         ticket.appendChild(resolveButton);
-        tticket.appendChild(editButton);
+        ticket.appendChild(editButton);
+        ticket.appendChild(saveButton);
     });
 });
 }
+document.getElementById('addTicketBtn').addEventListener('click', function() {
+    // Prompt user for ticket details
+    const customerName = prompt("Enter customer name:");
+    const issueDescription = prompt("Enter issue description:");
+    const priorityLevel = prompt("Enter priority level (High, Medium, Low):");
+
+    // Validate inputs before creating a ticket
+    if (customerName && issueDescription && priorityLevel) {
+        addTicket(customerName, issueDescription, priorityLevel);
+    } else {
+        alert("Please fill in all details to create a ticket.");
+    }
+});
 
 // Task 3 Addition
 // making a function to highlight tickets
