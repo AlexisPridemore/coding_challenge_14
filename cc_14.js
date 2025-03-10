@@ -9,12 +9,12 @@ function addTicket(customerName, issueDescription, priorityLevel) {
     const nameHeading = document.createElement('h2'); //Add heading for customer's name
     nameHeading.textContent = customerName;
     
-    const issueText= document.createElement('p');  //issue description section
+    const issueText= document.createElement('p');  //Add issue description section
     issueText.textContent = issueDescription;
 
     const priorityState = document.createElement('span');
     priorityState.textContent = `Priority: ${priorityLevel}`;
-    priorityState.setAttribute('class', priorityLevel.toLowerCase());
+    priorityState.setAttribute('class', `${priorityLevel.toLowerCase()}-priority`);
 
     const resolveButton = document.createElement('button');  //Add resolve button to remove the ticket
     resolveButton.textContent = 'Resolve';
@@ -27,10 +27,10 @@ editButton.setAttribute('class', 'edit-button')
 
 // Task 4 addition
 resolveButton.addEventListener('click', function(event) {
-    ticketContainer.removeChild(ticket); // removing ticket from container
+    ticketContainer.removeChild(ticket); //Removing ticket from container
     event.stopPropagation();
 })
-
+//Add an event listener to each support ticket- Task 5
 editButton.addEventListener('click', function(event) {
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
@@ -56,15 +56,15 @@ editButton.addEventListener('click', function(event) {
 // Task 5 Inline Editing of Support Tickets
 
 ticket.addEventListener('dblclick', function() {
-    const nameInput = document.createElement('input');
+    const nameInput = document.createElement('input');  //input fields
     nameInput.setAttribute('type', 'text');
     nameInput.value = nameHeading.textContent;
 
-    const issueInput = document.createElement('input');
+    const issueInput = document.createElement('input');   //input fields
     issueInput.setAttribute('type', 'text');
     issueInput.value = issueText.textContent;
 
-    const priorityInput = document.createElement('input');
+    const priorityInput = document.createElement('input');   //input fields
     priorityInput.setAttribute('type', 'text');
     priorityInput.value = priorityState.textContent.split(": ")[1]; // trying to get current priority
 
@@ -76,11 +76,12 @@ ticket.addEventListener('dblclick', function() {
     // clearing current content
     ticket.innerHTML = '';
 
-    // appending again just in case
+    // appending again 
     ticket.appendChild(nameInput);
     ticket.appendChild(issueInput);
     ticket.appendChild(priorityInput);
     ticket.appendChild(saveButton);
+
 
      // save button listener
      saveButton.addEventListener('click', function() {
@@ -118,16 +119,22 @@ document.getElementById('addTicketBtn').addEventListener('click', function() {
 // Task 3 Addition
 // making a function to highlight tickets
 function highlightHighPriorityTickets() {
-    const highlightHighPriorityTickets = document.querySelectorAll('.high');
-    const highPriorityArray = Array.from(highlightHighPriorityTickets);
+    // Select all tickets inside the ticket container
+    const tickets = document.querySelectorAll('#ticketContainer .ticket');
 
-    highPriorityArray.forEach(ticket => {
-        ticket.style.backgroundColor = 'lightblue'; // setting a highlight color
-        ticket.style.border = '2px solid green'; // added a border
+    tickets.forEach(ticket => {
+        // Find the priority span inside each ticket
+        const priorityState = ticket.querySelector('span');
+
+        if (priorityState && priorityState.textContent.includes("High")) {
+            // Add high-priority class to visually highlight it
+            ticket.classList.add('high-priority');
+        }
     });
 }
 
-highlightHighPriorityTickets()
+// Call function after adding a ticket
+highlightHighPriorityTickets();
 
 // attaching an event listener to ticketContainer
 const ticketContainer = document.getElementById('ticketContainer');
